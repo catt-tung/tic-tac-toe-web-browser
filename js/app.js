@@ -1,3 +1,4 @@
+
 /*-------------------------------- Constants --------------------------------*/
 //winning states
 
@@ -20,14 +21,22 @@ const sq7El = document.getElementById('sq7')
 const sq8El = document.getElementById('sq8')
 
 /*----------------------------- Event Listeners -----------------------------*/
-
+sq0El.addEventListener('click', handleClick)
+sq1El.addEventListener('click', handleClick)
+sq2El.addEventListener('click', handleClick)
+sq3El.addEventListener('click', handleClick)
+sq4El.addEventListener('click', handleClick)
+sq5El.addEventListener('click', handleClick)
+sq6El.addEventListener('click', handleClick)
+sq7El.addEventListener('click', handleClick)
+sq8El.addEventListener('click', handleClick)
 
 
 /*-------------------------------- Functions --------------------------------*/
 //first create an initial state array 
-function init () {
+function init() {
   // theBoard = new Array(9).fill(null)
-  theBoard = [-1, null, null, 1, null, null, null, -1, null]
+  theBoard = [null, null, null, null, null, null, null, null, null]
   trackTurn = 1
   isWinner = null
   // console.log(sq3El)
@@ -39,19 +48,39 @@ function render() {
   theBoard.forEach((sqEl, idx) => {
     if (sqEl === 1) {
       //put how it will change the square if the square is player X 
-      console.log("hi")
+      squaresEl[idx].textContent = "X"
     }
     else if (sqEl === -1) {
       //put how it will change the square if the square is player O
-      console.log("bye")
+      squaresEl[idx].textContent = "O"
     }
     else if (sqEl === null) {
       //reset to default style
+      squaresEl[idx].textContent = ""
     }
   })
-  if (isWinner !== null) {
-    console.log("`It is player ${trackTurn}s turn`")
+  // 3.3.2) Render a message reflecting the current game state:
+  if (!isWinner) {
+    //display message who's turn it is based on switching the turns
+    gameStatus.textContent = `It is ${trackTurn === 1 ? 'Player X' : 'Player O'}s Turn!`
+  } else if (isWinner === 'T'){
+      gameStatus.textContent = "It is a tie!"
+  } else {
+    gameStatus.textContent = `Congratulations to ${isWinner === 1 ? 'Player X' : 'Player O'}`
   }
+  console.log(gameStatus)
 }
 
+const winningCombos = [[theBoard[0], theBoard[1], theBoard[2]], [theBoard[0], theBoard[4], theBoard[8]], [theBoard[0], theBoard[3], theBoard[6]], [theBoard[2], theBoard[4], theBoard[6]], [theBoard[2], theBoard[5], theBoard[8]], [theBoard[6], theBoard[7], theBoard[8]], [theBoard[1], theBoard[4], theBoard[7]], [theBoard[3], theBoard[4], theBoard[5]]]
+// console.log(winningCombos)
+
+function handleClick(evt) {
+  //obtain index value
+  let selectedSqEl = parseInt(evt.target.id)
+  console.log(selectedSqEl)
+  //write out if the value is already taken, return to default, if the winner is not null 
+  // if (evt === null) {
+  // }
+}
+handleClick(evt)
 
