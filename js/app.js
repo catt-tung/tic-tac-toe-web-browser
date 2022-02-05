@@ -10,6 +10,7 @@ let theBoard = [], trackTurn, isWinner
 /*------------------------ Cached Element References ------------------------*/
 const gameStatus = document.querySelector('#message')
 const squaresEl = document.querySelectorAll('.square')
+const boardEl = document.querySelector('.board')
 const sq0El = document.getElementById('sq0')
 const sq1El = document.getElementById('sq1')
 const sq2El = document.getElementById('sq2')
@@ -21,15 +22,7 @@ const sq7El = document.getElementById('sq7')
 const sq8El = document.getElementById('sq8')
 
 /*----------------------------- Event Listeners -----------------------------*/
-sq0El.addEventListener('click', handleClick)
-sq1El.addEventListener('click', handleClick)
-sq2El.addEventListener('click', handleClick)
-sq3El.addEventListener('click', handleClick)
-sq4El.addEventListener('click', handleClick)
-sq5El.addEventListener('click', handleClick)
-sq6El.addEventListener('click', handleClick)
-sq7El.addEventListener('click', handleClick)
-sq8El.addEventListener('click', handleClick)
+boardEl.addEventListener('click', handleClick)
 
 
 /*-------------------------------- Functions --------------------------------*/
@@ -75,12 +68,25 @@ const winningCombos = [[theBoard[0], theBoard[1], theBoard[2]], [theBoard[0], th
 // console.log(winningCombos)
 
 function handleClick(evt) {
-  //obtain index value
-  let selectedSqEl = parseInt(evt.target.id)
-  console.log(selectedSqEl)
-  //write out if the value is already taken, return to default, if the winner is not null 
-  // if (evt === null) {
-  // }
+  //on click, we want it to obtain the index value of the id, return it as an integer, change theBoard to match the index where it was clicked
+  const clickedSq = evt.target.id
+  console.log(parseInt(clickedSq.split('').slice(-1)))
+  let clickedSqId = parseInt(clickedSq.split('').slice(-1))
+
+  if (theBoard[clickedSqId] !== null){
+    //return to the original turn/default
+  }
+  if (isWinner !== null){
+    //end the game 
+  }
+  if (theBoard[clickedSqId] === null){
+    theBoard[clickedSq] = trackTurn
+    console.log(theBoard)
+  }
+  trackTurn = (trackTurn * -1)
+
+  
 }
-handleClick(evt)
+handleClick()
+
 
