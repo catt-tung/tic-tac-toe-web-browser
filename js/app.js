@@ -66,21 +66,21 @@ function render() {
 }
 
 const winningCombos = [
-  [theBoard[0], theBoard[1], theBoard[2]],
-  [theBoard[0], theBoard[4], theBoard[8]],
-  [theBoard[0], theBoard[3], theBoard[6]],
-  [theBoard[2], theBoard[4], theBoard[6]],
-  [theBoard[2], theBoard[5], theBoard[8]],
-  [theBoard[6], theBoard[7], theBoard[8]],
-  [theBoard[1], theBoard[4], theBoard[7]],
-  [theBoard[3], theBoard[4], theBoard[5]]
+  [0, 1, 2],
+  [0, 4, 8],
+  [0, 3, 6],
+  [2, 4, 6],
+  [2, 5, 8],
+  [6, 7, 8],
+  [1, 4, 7],
+  [3, 4, 5]
 ]
-// console.log(winningCombos)
+console.log(winningCombos)
 
 function handleClick(evt) {
   //on click, we want it to obtain the index value of the id, return it as an integer, change theBoard to match the index where it was clicked
   const clickedSq = evt.target.id
-  console.log(parseInt(clickedSq.split('').slice(-1)))
+  console.log("clicked Sq" + parseInt(clickedSq.split('').slice(-1)))
   let clickedSqId = parseInt(clickedSq.split('').slice(-1))
   
   if (theBoard[clickedSqId] !== null){
@@ -95,9 +95,25 @@ function handleClick(evt) {
     trackTurn = (trackTurn * -1)
   }
   render()
-
-  
+  getWinner()
 }
-handleClick()
+// handleClick()
+
+function getWinner() {
+  // forEach.winningCombos (combo, ind => winningCombos[ind].reduce((prev, curr) => prev + curr, 0))
+  // let sum = winningCombos.reduce((prev,curr) => prev + curr, 0)
+  // console.log(sum)
+  winningCombos.forEach(combo => {
+    let a = combo[0]
+    let b = combo[1]
+    let c = combo[2]
+    if (Math.abs(theBoard[a] + theBoard[b] + theBoard[c]) === 3){
+      isWinner = (trackTurn * -1)
+      console.log(isWinner)
+    }
+  })
+
+}
+
 
 
