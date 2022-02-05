@@ -25,6 +25,7 @@ const sq8El = document.getElementById('sq8')
 boardEl.addEventListener('click', handleClick)
 
 
+
 /*-------------------------------- Functions --------------------------------*/
 //first create an initial state array 
 function init() {
@@ -64,7 +65,16 @@ function render() {
   console.log(gameStatus)
 }
 
-const winningCombos = [[theBoard[0], theBoard[1], theBoard[2]], [theBoard[0], theBoard[4], theBoard[8]], [theBoard[0], theBoard[3], theBoard[6]], [theBoard[2], theBoard[4], theBoard[6]], [theBoard[2], theBoard[5], theBoard[8]], [theBoard[6], theBoard[7], theBoard[8]], [theBoard[1], theBoard[4], theBoard[7]], [theBoard[3], theBoard[4], theBoard[5]]]
+const winningCombos = [
+  [theBoard[0], theBoard[1], theBoard[2]],
+  [theBoard[0], theBoard[4], theBoard[8]],
+  [theBoard[0], theBoard[3], theBoard[6]],
+  [theBoard[2], theBoard[4], theBoard[6]],
+  [theBoard[2], theBoard[5], theBoard[8]],
+  [theBoard[6], theBoard[7], theBoard[8]],
+  [theBoard[1], theBoard[4], theBoard[7]],
+  [theBoard[3], theBoard[4], theBoard[5]]
+]
 // console.log(winningCombos)
 
 function handleClick(evt) {
@@ -72,18 +82,19 @@ function handleClick(evt) {
   const clickedSq = evt.target.id
   console.log(parseInt(clickedSq.split('').slice(-1)))
   let clickedSqId = parseInt(clickedSq.split('').slice(-1))
-
+  
   if (theBoard[clickedSqId] !== null){
-    //return to the original turn/default
+    return
   }
   if (isWinner !== null){
-    //end the game 
+    return
   }
   if (theBoard[clickedSqId] === null){
-    theBoard[clickedSq] = trackTurn
+    theBoard[clickedSqId] = trackTurn
     console.log(theBoard)
+    trackTurn = (trackTurn * -1)
   }
-  trackTurn = (trackTurn * -1)
+  render()
 
   
 }
