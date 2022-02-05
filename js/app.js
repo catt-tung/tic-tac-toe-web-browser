@@ -11,15 +11,15 @@ let theBoard = [], trackTurn, isWinner
 const gameStatus = document.querySelector('#message')
 const squaresEl = document.querySelectorAll('.square')
 const boardEl = document.querySelector('.board')
-const sq0El = document.getElementById('sq0')
-const sq1El = document.getElementById('sq1')
-const sq2El = document.getElementById('sq2')
-const sq3El = document.getElementById('sq3')
-const sq4El = document.getElementById('sq4')
-const sq5El = document.getElementById('sq5')
-const sq6El = document.getElementById('sq6')
-const sq7El = document.getElementById('sq7')
-const sq8El = document.getElementById('sq8')
+// const sq0El = document.getElementById('sq0')
+// const sq1El = document.getElementById('sq1')
+// const sq2El = document.getElementById('sq2')
+// const sq3El = document.getElementById('sq3')
+// const sq4El = document.getElementById('sq4')
+// const sq5El = document.getElementById('sq5')
+// const sq6El = document.getElementById('sq6')
+// const sq7El = document.getElementById('sq7')
+// const sq8El = document.getElementById('sq8')
 
 /*----------------------------- Event Listeners -----------------------------*/
 boardEl.addEventListener('click', handleClick)
@@ -33,7 +33,6 @@ function init() {
   theBoard = [null, null, null, null, null, null, null, null, null]
   trackTurn = 1
   isWinner = null
-  // console.log(sq3El)
   render()
 }
 init()
@@ -53,16 +52,19 @@ function render() {
       squaresEl[idx].textContent = ""
     }
   })
-  // 3.3.2) Render a message reflecting the current game state:
+  // Render a message reflecting the current game state:
   if (!isWinner) {
     //display message who's turn it is based on switching the turns
     gameStatus.textContent = `It is ${trackTurn === 1 ? 'Player X' : 'Player O'}s Turn!`
-  } else if (isWinner === 'T'){
+  } 
+  if (isWinner !== null){
+    if (isWinner === 'T'){
       gameStatus.textContent = "It is a tie!"
   } else {
-    gameStatus.textContent = `Congratulations to ${isWinner === 1 ? 'Player X' : 'Player O'}`
+    gameStatus.textContent = `${isWinner === 1 ? 'Player X' : 'Player O'} won!`
   }
   console.log(gameStatus)
+}
 }
 
 const winningCombos = [
@@ -82,7 +84,7 @@ function handleClick(evt) {
   const clickedSq = evt.target.id
   console.log("clicked Sq" + parseInt(clickedSq.split('').slice(-1)))
   let clickedSqId = parseInt(clickedSq.split('').slice(-1))
-  
+  getWinner()
   if (theBoard[clickedSqId] !== null){
     return
   }
@@ -95,7 +97,7 @@ function handleClick(evt) {
     trackTurn = (trackTurn * -1)
   }
   render()
-  getWinner()
+  
 }
 // handleClick()
 
@@ -112,6 +114,9 @@ function getWinner() {
       console.log(isWinner)
     }
   })
+  if (isWinner === null && theBoard.every(square => square !== null)) {
+    isWinner === 'T'
+  }
 
 }
 
