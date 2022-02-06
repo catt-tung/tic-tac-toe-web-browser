@@ -1,7 +1,16 @@
 
 /*-------------------------------- Constants --------------------------------*/
 //winning states
-
+const winningCombos = [
+  [0, 1, 2],
+  [0, 4, 8],
+  [0, 3, 6],
+  [2, 4, 6],
+  [2, 5, 8],
+  [6, 7, 8],
+  [1, 4, 7],
+  [3, 4, 5]
+]
 
 /*---------------------------- Variables (state) ----------------------------*/
 let theBoard = [], trackTurn, isWinner
@@ -11,19 +20,11 @@ let theBoard = [], trackTurn, isWinner
 const gameStatus = document.querySelector('#message')
 const squaresEl = document.querySelectorAll('.square')
 const boardEl = document.querySelector('.board')
-// const sq0El = document.getElementById('sq0')
-// const sq1El = document.getElementById('sq1')
-// const sq2El = document.getElementById('sq2')
-// const sq3El = document.getElementById('sq3')
-// const sq4El = document.getElementById('sq4')
-// const sq5El = document.getElementById('sq5')
-// const sq6El = document.getElementById('sq6')
-// const sq7El = document.getElementById('sq7')
-// const sq8El = document.getElementById('sq8')
+const replayBtn = document.querySelector('#replay-button')
 
 /*----------------------------- Event Listeners -----------------------------*/
 boardEl.addEventListener('click', handleClick)
-
+replayBtn.addEventListener('click', init)
 
 
 /*-------------------------------- Functions --------------------------------*/
@@ -33,11 +34,13 @@ function init() {
   theBoard = [null, null, null, null, null, null, null, null, null]
   trackTurn = 1
   isWinner = null
+  replayBtn.setAttribute("hidden", true)
   render()
 }
 init()
 
 function render() {
+  getWinner()
   theBoard.forEach((sqEl, idx) => {
     if (sqEl === 1) {
       //put how it will change the square if the square is player X 
@@ -60,23 +63,15 @@ function render() {
   if (isWinner !== null){
     if (isWinner === 'T'){
       gameStatus.textContent = "It is a tie!"
+      replayBtn.removeAttribute("hidden")
   } else {
     gameStatus.textContent = `${isWinner === 1 ? 'Player X' : 'Player O'} won!`
+    replayBtn.removeAttribute("hidden")
   }
   console.log(gameStatus)
 }
 }
 
-const winningCombos = [
-  [0, 1, 2],
-  [0, 4, 8],
-  [0, 3, 6],
-  [2, 4, 6],
-  [2, 5, 8],
-  [6, 7, 8],
-  [1, 4, 7],
-  [3, 4, 5]
-]
 console.log(winningCombos)
 
 function handleClick(evt) {
@@ -112,13 +107,13 @@ function getWinner() {
     if (Math.abs(theBoard[a] + theBoard[b] + theBoard[c]) === 3){
       isWinner = (trackTurn * -1)
       console.log(isWinner)
+      confetti.start(2000)
     }
   })
-  if (isWinner === null && theBoard.every(square => square !== null)) {
-    isWinner === 'T'
+  if (isWinner === null && !theBoard.includes(null)) {
+    return isWinner === 'T'
   }
-
 }
 
-
+// theBoard.every(square => square !== null)
 
