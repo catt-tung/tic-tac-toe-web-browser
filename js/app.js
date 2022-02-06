@@ -97,23 +97,18 @@ function handleClick(evt) {
 // handleClick()
 
 function getWinner() {
-  // forEach.winningCombos (combo, ind => winningCombos[ind].reduce((prev, curr) => prev + curr, 0))
-  // let sum = winningCombos.reduce((prev,curr) => prev + curr, 0)
-  // console.log(sum)
   winningCombos.forEach(combo => {
     let a = combo[0]
     let b = combo[1]
     let c = combo[2]
     if (Math.abs(theBoard[a] + theBoard[b] + theBoard[c]) === 3){
       isWinner = (trackTurn * -1)
-      console.log(isWinner)
       confetti.start(2000)
     }
   })
-  if (isWinner === null && !theBoard.includes(null)) {
-    return isWinner === 'T'
+  if (isWinner === null && theBoard.every(square => square !== null)) {
+    isWinner = 'T'
   }
+  console.log(isWinner)
 }
-
-// theBoard.every(square => square !== null)
 
